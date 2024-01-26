@@ -19,6 +19,8 @@ from django.urls import path
 from scrapbox import views
 from django.conf import settings
 from django.conf.urls.static import static
+from scrapbox import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,10 +33,15 @@ urlpatterns = [
     path('itemview/<int:pk>/viewdetails',views.ItemView.as_view(),name="itemview"),
     path('profile/<int:pk>/view',views.ProfileDetailView.as_view(),name="profiledetail_view"),
     path('cart/view',views.CartListView.as_view(),name="cart-view"),
-    # path('scrapbox/<int:pk>/addtobasket',views.AddToCartView.as_view(),name="add-cart"),
     path('scrap/<int:pk>/update',views.ScrapUpdateView.as_view(),name="scrap-update"),
-    # path('scrapbox/<int:pk>/addtocartlist',views.AddToCartView.as_view(),name="addto-cart"),
-    path('scrapbox/<int:pk>/addtocart/',views.AddToWishListView.as_view(),name="addto-cart")
+    path('scrapbox/<int:pk>/addtocart', views.AddToWishList.as_view(), name="addtocart"),
+
+
+   path('scrapbox/cartlist', views.CartListView.as_view(), name="cartlist-view"),
+
+    path('add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    
+    
    
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

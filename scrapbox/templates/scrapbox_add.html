@@ -18,25 +18,28 @@
                 <h4 class="ms-3">  <i class="fa-solid fa-user"></i> {{request.user}}</h4>
             </div>
           <div class="d-flex justify-content-end">
-            <a href="{%url 'index'  %}" class="btn btn-info border-dark bg-secondary text-light"><i class="fa-solid fa-house"></i></a>
-    
-                <a href="{%url 'signout'%}" class="ms-auto btn btn-info border-dark bg-secondary text-light"  ><i class="fa-solid fa-power-off"></i> </a> 
-    
+            <a href="{% url 'index' %}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Go to Home">
+                <i class="fas fa-house"></i>
+              </a>
+              <a href="{%url 'signout'%}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log out">
+                <i class="fas fa-power-off"></i>
+              </a>
+      
         </div>   
 </nav> 
     
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center mt-5">
 
 
 
-        <div class="card" style="width: 25rem; height: auto;">      
+        <div class="card" style="width: 25rem; height: 70%; width: 40%;">      
             <div class="row" >
                 <div class="col-l-10 mt-2 p-5 body  " >        
                     <form  action="" method="post" enctype="multipart/form-data">
                         <h4 class="text-center">Add new data here</h4>
                         {%csrf_token%}
                         {{form.as_p}}
-                        <button class="btn btn-secondary" type="submit">
+                        <button class="btn btn-secondary"data-bs-toggle="tooltip" data-bs-placement="bottom" title="submit" type="submit">
                             Submit
                         </button>
                     </form>

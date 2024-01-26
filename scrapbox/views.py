@@ -1,15 +1,15 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.contrib.auth import login,logout,authenticate
 from django.http import JsonResponse
 from django.views import View
 
 from .models import Scrapbox, WishList
-from scrapbox.models import Scrapbox,UserProfile,WishList,BasketItem
+from scrapbox.models import Scrapbox,UserProfile,WishList,BasketItem,CartItem
 
 from django.views.generic import View,CreateView,UpdateView,DetailView
 from scrapbox.forms import UserForm,LoginForm,ScrapboxForm,UserProfileForm,BasketForm,BasketItemForm
 from scrapbox.forms import UserCreationForm #UserProfile
-
+from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 
@@ -160,77 +160,42 @@ class AddToCartView(View) :
 # add to wishlist
     # http://127.0.0.1:8000/scrapbox/4/addtocart
 
-# class AddToWishList(View):
-  
-    
-    # def post(self,request,*args,**kwargs):
-    #     id=kwargs.get("pk")
-    #     scrapbox_object=Scrapbox.objects.get(id=id)
-    #     action=request.POST.get("action")
-    #     print("++++++",action)
-    #     cart,created=WishList.objects.get_or_create(user=request.user)
-    #     if action == "addtocart":  #addtocart
-    #         cart.scrap.add(scrapbox_object)           #request.user.profile will give the logined user
-    #     return redirect("index")
-     
-
-
-class AddToWishListView(View):
+class AddToWishList(View):
   
     def post(self, request, *args, **kwargs):
-        id = kwargs.get("pk")
-        scrapbox_object = Scrapbox.objects.get(id=id)
+        scrapbox_id = kwargs.get("pk")
+        print(scrapbox_id)
+        # scrapbox_object=Scrapbox.objects.get(id=id)
+        scrapbox_object = get_object_or_404(Scrapbox, id=scrapbox_id)
+        print(scrapbox_object)
         action = request.POST.get("action")
         print("++++++", action)
 
-        # Get or create the user's wishlist
-        wishlist, created = WishList.objects.get_or_create(user=request.user)
+        cart, created = WishList.objects.get_or_create(user=request.user)
 
         if action == "addtocart":
-            wishlist.scrap.add(scrapbox_object)
-            return JsonResponse({'status': 'success', 'message': 'Item added to wishlist'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'Invalid action'})
+            
+            cart.scrap.add(scrapbox_object)
+            print("added......")
 
+        return redirect("index")
 
-     
-         
-         
+           
 
 #cart -view cart list  
-# http://127.0.0.1:8000/cart/view  
-     
-# class CartListView(View):
-#     def get(self,request,*args,**kwargs):
-#         qs=WishList.objects.get(user_id=request.user)
-#         wish_items=Scrapbox.objects.exclude(user=request.user)
-#         return render(request,"cartlist.html",{"data":qs})
-        
+# http://127.0.0.1:8000/cart/view  --cart list view
+         
+
+    
 class CartListView(View):
     def get(self, request, *args, **kwargs):
-        try:
-            # Assuming the user has only one wishlist, you can use 'get' instead of 'filter'
-            wishlist = WishList.objects.get(user=request.user)
-            
-            # Retrieve items in the wishlist
-            wish_items = wishlist.scrap.all()
-
-            return render(request, "cartlist.html", {"data": wish_items})
-        except WishList.DoesNotExist:
-            # Handle the case where the user doesn't have a wishlist
-            return render(request, "cartlist.html", {"data": None})
+        user_wishlist, created = WishList.objects.get_or_create(user=request.user)
+        cart_items = Scrapbox.objects.exclude(wished_scrap=user_wishlist)
+        print("Cart Items:", cart_items)
+        return render(request, "cartlist.html", {"data": cart_items})
 
 
-
-
-
-
-
-
-
-
-
-
+        
 
 
 #item add view
@@ -243,6 +208,16 @@ class IndexView(CreateView):
     def get_success_url(self) -> str:
         return reverse("index")
 
+
+#
+@login_required
+def add_to_cart(request, product_id):
+    product = Scrapbox.objects.get(id=product_id)
+    cart_item, created = CartItem.objects.get_or_create(product=product, 
+                                                       user=request.user)
+    cart_item.quantity += 1
+    cart_item.save()
+    return redirect('cart:view_cart')
    
 
 

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon"  href="{% static 'social/images/logo.png' %}" type="image/x-icon">
+    <link rel="icon"  href="{% static 'images/p2.png' %}" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'social/css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -11,22 +11,20 @@
      <script src="https://kit.fontawesome.com/45536f30e1.js" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+    <title> Driven Innovations</title>
 </head>
-<body style="    background-color: #FFDEE9;
-background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);">
-    <nav class="navbar bg-dark border-bottom border-body text-light" data-bs-theme="dark">
-        <p><h1>Driven Innovations</h1></p>
-        <p>Welcome to Driven Innovations. Please login/signup to proceed</p>
-    </nav>   
-   <div class=" master-container main container  d-flex justify-content-start  mt-5 mb-5"> 
+<body>
+   <div class="main container  d-flex justify-content-center  mt-5"> 
     <div class="col-lg-7 col-md-8 col-sm-12 ms-5 ">
-        <img src="{%static 'images/register1.jpeg' %}" alt="" style="width: 450px; height:100vh" class=" d-block w-100"> 
+        <h2 class="text-warning fw-bolder fs-1">Pinnacle of driving experiances<br>begins with Driven Innovations</h2>
+        <h4 class="text-white">"Unleash the power of connection with Linkspher. <br>Your digital hub for meaningful conversations, endless <br> possibilities, and vibrant communities."</h4>
+        <img src="{%static 'images/p2.png' %}" alt="" style="width: 450px;" class="mt-5 ms-5">
     </div>
-    <div class="col-lg-5 col-md-4 col-sm-12 bg-white border rounded-3 me-5  shadow-lg" >
+    <div class="col-lg-5 col-md-4 col-sm-12 bg-white border rounded-3 me-5 mt-5 shadow-lg" >
        <div class="container ">
         <div class="d-flex justify-content-center mt-5 ">
         <h2 class="text-center fw-bolder fs-2 me-3"></h2>
-        <img src="{%static 'images/driven.png'%}" alt="" style="height: 100px;width: 150px; box-shadow: 1px 1px 12px 2px black;" >
+        <img src="{%static 'images/logo.png' %}" alt="" style="height: 100px;width: 150px; box-shadow: 1px 1px 12px 2px black;" >
     </div>
     {%if form.errors%}
         {{form.errors}}

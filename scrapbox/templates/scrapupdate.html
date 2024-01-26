@@ -13,24 +13,27 @@
 <body class="body" style="background-color: #D5F5E3 ;">
 <nav class="navbar bg-dark p-2 text-dark  border-bottom border-body text-dark text-start  " data-bs-theme="dark">
         <div class="col-l-8  text-light  justify-content-center">
-            <h4 class="ms-3">  <i class="fa-solid fa-user"></i> {{request.user}}</h4>
+            <h4 class="ms-3">  <i class="fa-solid fa-user" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{request.user}}"></i> {{request.user}}</h4>
         </div>
           <div class="d-flex justify-content-end">
-            <a href="{%url 'index'  %}" class="btn btn-info border-dark bg-secondary text-light"><i class="fa-solid fa-house"></i></a>
-    
-                <a href="{%url 'signout'%}" class="ms-auto btn btn-info border-dark bg-secondary text-light"  ><i class="fa-solid fa-power-off"></i> </a> 
-    
+            <a href="{% url 'index' %}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Go to Home">
+                <i class="fas fa-house"></i>
+              </a>
+              <a href="{%url 'signout'%}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log out">
+                <i class="fas fa-power-off"></i>
+              </a>
+      
         </div>   
 </nav>  
 <div class=" container d-flex justify-content-center">
     <div class="row" >
-        <div class="col-l-10 mt-2 p-5 body  " >        
+        <div class="col-l-10 mt-3 p-5 body  " >        
             <!-- <div class="card ms-2 " style="width: 38rem; height: auto;"> -->
                 <form action="" method="post" enctype="multipart/form-data">
                 <h4 class="text-center">Update Scrap</h4>
                 {%csrf_token%}
                 {{form.as_p}}
-                <button class="btn btn-secondary" type="submit">
+                <button class="btn btn-secondary"data-bs-toggle="tooltip" data-bs-placement="bottom" title="submit" type="submit">
                     Submit
                 </button>
             </form>
