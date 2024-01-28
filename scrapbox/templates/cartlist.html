@@ -15,45 +15,44 @@
 
 <body style="background-color: #D5F5E3 ;">
     <nav class="navbar bg-dark p-2 text-dark  border-bottom border-body text-dark text-start  " data-bs-theme="dark">
-              <div class="col-l-8  text-light  justify-content-center">
-                <h4 class="ms-3">  <i class="fa-solid fa-user"></i> {{request.user}}</h4>
-            </div>
-          <div class="d-flex justify-content-end">
+        <div class="col-l-8  text-light  justify-content-center">
+            <h4 class="ms-3"> <i class="fa-solid fa-user"></i> {{request.user}}</h4>
+        </div>
+        <div class="d-flex justify-content-end">
             <a href="{% url 'index' %}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Go to Home">
                 <i class="fas fa-house"></i>
-              </a>
-              <a href="{%url 'signout'%}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log out">
+            </a>
+            <a href="{% url 'signout'%}" class="btn btn-info border-dark bg-secondary text-light" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log out">
                 <i class="fas fa-power-off"></i>
-              </a>
-      
-        </div>   
-    </nav> 
+            </a>
+        </div>
+    </nav>
     <h1>My Cart</h1>
-    <form action="{%url 'cartlist-view' %}" method="" enctype="multipart/form-data">
-        {% csrf_token %}
-        <!-- {{data}} -->
+    <!-- <div>
         {% for item in data %}
-               
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                          <div class="col-md-4">
-                            <img src="" class="img-fluid rounded-start" alt="...">
-                          </div>
-                          <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ item.name }}</h5>
-                                <p class="card-text">{{ item.price}}</p>
-                                <p class="card-text">{{ item.location }}</p>
-                                <p class="card-text">{{ item.description}}</p>
-                                <p class="card-text">{{ item.phone_no }}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if item.picture %}
+                        <img src="{{ item.picture.url }}" class="img-fluid rounded-start" alt="Scrapbox Image">
+                    {% else %}
+                        <p>No Image</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.price}}</p>
+                        <p class="card-text">{{ item.location }}</p>
+                        <p class="card-text">{{ item.description}}</p>
+                        <p class="card-text">{{ item.phone_no }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-          
-        
-    </form>
+    </div> -->
+    {{data}}
 </body>
 
 </html>

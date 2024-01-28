@@ -85,9 +85,16 @@ class ScrapUpdateView(View):
         obj=Scrapbox.objects.get(id=id)
         form=ScrapboxForm(request.POST,instance=obj,files=request.FILES)
         if (form.is_valid()):
-            form.save()
-            print("data updated sucessfully-----")
-            return redirect("index")
+            print(form.instance.name)
+            if form.instance.owner==request.user:
+
+                    form.save()
+                    messages.success(request,"data updated sucessfully-----")
+                    return redirect("index")
+            
+            else :
+                messages.error(request,"you are not authorized to update data")
+                return render(request,"scrapupdate.html",{"form":form})
         else:
             print("can't update .......")
             return render(request,"scrapupdate.html",{"form":form})
@@ -136,26 +143,6 @@ class ProfileUpdateView(UpdateView):
 #  url:http://127.0.0.1:8000/scrapbox/{id}/add_to_basket/
 # http://127.0.0.1:8000/cart/view
     
-# # http://127.0.0.1:8000/listall
-
-
-class AddToCartView(View) :
-    
-    def get(self,request,*args,**kwargs):
-        id=kwargs.get("pk")
-        qs=Scrapbox.objects.get(id=id)
-        return render(request,"scrapboxitem_view.html",{"data":qs})
-    
-    def post(self,request,*args,**kwargs):
-                id=kwargs.get("pk")
-                product= Scrapbox.objects.get(id=id)
-                cart,created=WishList.objects.get_or_create(user=request.user)
-                cart_item,item_created = BasketItem.objects.get_or_create(cart=cart,product=product)
-                if not item_created:
-                         cart_item.quantity += 1
-                         cart_item.save()
-    
-                return redirect("index")
 
 # add to wishlist
     # http://127.0.0.1:8000/scrapbox/4/addtocart
@@ -184,17 +171,14 @@ class AddToWishList(View):
 
 #cart -view cart list  
 # http://127.0.0.1:8000/cart/view  --cart list view
-         
 
-    
+
 class CartListView(View):
     def get(self, request, *args, **kwargs):
-        user_wishlist, created = WishList.objects.get_or_create(user=request.user)
-        cart_items = Scrapbox.objects.exclude(wished_scrap=user_wishlist)
-        print("Cart Items:", cart_items)
+        cart_items = WishList.objects.filter(user=request.user)
+        
         return render(request, "cartlist.html", {"data": cart_items})
-
-
+        
         
 
 

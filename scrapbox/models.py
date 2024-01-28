@@ -21,7 +21,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Scrapbox(models.Model):
-
+    owner=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     name=models.CharField(max_length=200)
     category=models.CharField(max_length=200)
     price=models.IntegerField()
@@ -44,9 +44,11 @@ class WishList(models.Model):     #cart
     scrap=models.ManyToManyField(Scrapbox,related_name="wished_scrap")
     created_at=models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    # def __str__(self):
             
-        return self.scrap
+    #     return self.scrap
+    def __str__(self):
+        return ', '.join(str(item) for item in self.scrap.all())
    
     
 

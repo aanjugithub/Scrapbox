@@ -32,7 +32,8 @@ class LoginForm(forms.Form):
 class ScrapboxForm(forms.ModelForm):
     class Meta:
         model=Scrapbox
-        fields="__all__"
+        # fields="__all__"
+        exclude=("owner",)
         
         widgets={
             "name":forms.TextInput(attrs={"class":"form-control"}),
