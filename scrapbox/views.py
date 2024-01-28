@@ -175,11 +175,19 @@ class AddToWishList(View):
 
 class CartListView(View):
     def get(self, request, *args, **kwargs):
-        cart_items = WishList.objects.filter(user=request.user)
-        
-        return render(request, "cartlist.html", {"data": cart_items})
-        
-        
+        user_wishlist = WishList.objects.filter(user=request.user).first()
+
+        return render(request, "cartlist.html", {"user_wishlist": user_wishlist})
+
+# remove from cart 
+# http://127.0.0.1:8000/cart/removve--cart delete
+    
+class RemoveCartItemView(View):
+    def get(self, request, *args, **kwargs):
+        wishlist_item_id = kwargs.get("pk")
+        wishlist_item = get_object_or_404(WishList, id=wishlist_item_id, user=request.user)
+        wishlist_item.delete()
+        return redirect("cartlist-view")
 
 
 #item add view

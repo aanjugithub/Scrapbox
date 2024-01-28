@@ -40,7 +40,7 @@ class Scrapbox(models.Model):
 
    
 class WishList(models.Model):     #cart
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_whishlist",default = "")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_whishlist",null=True)
     scrap=models.ManyToManyField(Scrapbox,related_name="wished_scrap")
     created_at=models.DateTimeField(auto_now_add=True)
 

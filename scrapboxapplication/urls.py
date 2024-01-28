@@ -38,6 +38,7 @@ urlpatterns = [
 
 
    path('scrapbox/cartlist', views.CartListView.as_view(), name="cartlist-view"),
+   path('scrapbox/<int:pk>/cart/delete',views.RemoveCartItemView.as_view(),name="removecart"),
 
     path('add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     
