@@ -21,7 +21,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Scrapbox(models.Model):
-    owner=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    
     name=models.CharField(max_length=200)
     category=models.CharField(max_length=200)
     price=models.IntegerField()
@@ -29,6 +29,7 @@ class Scrapbox(models.Model):
     picture=models.ImageField(upload_to="images",null=True,blank=True)
     phone_no=models.CharField(max_length=200,null=True)
     description=models.CharField(max_length=500,null=True,blank=True)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
    
 
     def __str__(self):

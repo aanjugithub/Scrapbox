@@ -85,15 +85,13 @@ class ScrapUpdateView(View):
         obj=Scrapbox.objects.get(id=id)
         form=ScrapboxForm(request.POST,instance=obj,files=request.FILES)
         if (form.is_valid()):
-            print(form.instance.name)
-            if form.instance.owner==request.user:
+            print("++++++",form.instance.name,form.instance.user)
+            if form.instance.user==request.user:
 
-                    form.save()
-                    messages.success(request,"data updated sucessfully-----")
-                    return redirect("index")
+                form.save()
+                return redirect("index")
             
             else :
-                messages.error(request,"you are not authorized to update data")
                 return render(request,"scrapupdate.html",{"form":form})
         else:
             print("can't update .......")
