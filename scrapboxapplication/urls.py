@@ -25,7 +25,7 @@ from scrapbox import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register',views.RegistrationView.as_view(),name="register"),
-    path('signin',views.LoginView.as_view(),name="signin"),
+    path('',views.LoginView.as_view(),name="signin"),
     path('index',views.IndexView.as_view(),name="index"),
     path('scrap/create',views.ScrapCreateView.as_view(),name="scrap-create"),
     path('signout',views.SignOutView.as_view(),name="signout"),

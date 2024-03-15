@@ -103,7 +103,7 @@ class ScrapboxListView(View):
     def get(self,request,*args,**kwargs):
         qs=Scrapbox.objects.all()
         return render(request,"scrapboxlist.html",{"data":qs})
-
+                                
 #signout
 
 class SignOutView(View):
