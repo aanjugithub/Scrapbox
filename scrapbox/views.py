@@ -84,17 +84,16 @@ class ScrapUpdateView(View):
         id=kwargs.get("pk")
         obj=Scrapbox.objects.get(id=id)
         form=ScrapboxForm(request.POST,instance=obj,files=request.FILES)
-        if (form.is_valid()):
-            print("++++++",form.instance.name,form.instance.user)
-            if form.instance.user==request.user:
-
+        if form.is_valid():
+            if form.instance.user == request.user:
                 form.save()
-                return redirect("index")
-            
-            else :
-                return render(request,"scrapupdate.html",{"form":form})
+                return redirect("list-all")
+            else:
+                messages.error(request,"You are not authorized to update the product")
+                return render(request, "scrapupdate.html", {"form": form})
         else:
             print("can't update .......")
+            messages.error(request," data updation failed....")
             return render(request,"scrapupdate.html",{"form":form})
 
 
@@ -104,6 +103,9 @@ class ScrapboxListView(View):
         qs=Scrapbox.objects.all()
         return render(request,"scrapboxlist.html",{"data":qs})
                                 
+
+
+
 #signout
 
 class SignOutView(View):
